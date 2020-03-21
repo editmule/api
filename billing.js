@@ -3,9 +3,10 @@ import { calculateCost } from "./libs/billing-lib";
 import { success, failure } from "./libs/response-lib";
 
 export async function main(event, context) {
-  const { words, source } = JSON.parse(event.body);
-  const amount = calculateCost(words);
-  const description = "Editing order fee";
+  const { orders, source } = JSON.parse(event.body);
+
+  const amount = calculateCost(orders);
+  const description = "Edit Mule order";
 
   // Load our secret key from the  environment variables
   const stripe = stripePackage(process.env.stripeSecretKey);

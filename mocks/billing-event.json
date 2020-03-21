@@ -1,5 +1,5 @@
 {
-  "body": "{\"source\":\"tok_visa\",\"words\":150}",
+  "body": "{\"source\":\"tok_visa\",\"orders\":[{\"wordcount\":1000,\"delivery\":\"48\",\"content\":\"testing\",\"attachment\":null},{\"wordcount\":50,\"delivery\":24,\"content\":\"4\",\"attachment\":null},{\"wordcount\":100,\"delivery\":24,\"content\":\"6\",\"attachment\":null}]}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"
