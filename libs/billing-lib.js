@@ -1,5 +1,5 @@
 export function calculateCost(orders) {
-  
+
   const subtotal = (Number(orders.reduce((prev,next) => prev + subtotalPricing(next.wordcount, next.delivery), 0))).toFixed(2);
   const serviceFee = Number(((subtotal)*0.15).toFixed(2));
 
@@ -10,7 +10,7 @@ function subtotalPricing(wordcount, delivery) {
   const wordcountCost = wordcountToPricing(wordcount);
   const deliveryDiscount = deliveryToPricing(wordcount, delivery);
 
-  return (Number((wordcountCost + deliveryDiscount).toFixed(2)))
+  return (Number((wordcountCost + deliveryDiscount).toFixed(2)));
 }
 
 function wordcountToPricing(wordcount) {
@@ -49,7 +49,7 @@ function deliveryToPricing(wordcount, delivery) {
     discountRate = -0.25;
   }
 
-  const discount = cost*discountRate
+  const discount = cost*discountRate;
 
   return Number((discount).toFixed(2));
 }
