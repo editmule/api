@@ -27,6 +27,7 @@ provider:
   environment:
     tableName: ${self:custom.tableName}
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
+    receiptEmailPassword: ${env:RECEIPT_EMAIL_PASSWORD}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
   # In this case Lambda functions are granted with permissions to access DynamoDB.
