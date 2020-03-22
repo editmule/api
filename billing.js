@@ -18,7 +18,7 @@ export async function main(event, context) {
       description,
       currency: "usd",
     });
-    return success({ status: true, chargeId: charge });
+    return success({ status: true, chargeId: charge.id });
   } catch (e) {
     return failure({ message: e.message });
   }
