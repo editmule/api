@@ -1,5 +1,5 @@
 {
-  "body": "{\"chargeId\":\"ch_1GDg77J7zHjTEGBx9HCgZJPW\",\"orders\":[{\"wordcount\":1000,\"delivery\":\"48\",\"content\":\"testing\",\"attachment\":null},{\"wordcount\":50,\"delivery\":24,\"content\":\"4\",\"attachment\":null},{\"wordcount\":100,\"delivery\":24,\"content\":\"6\",\"attachment\":null}]}",
+  "body": "{\"chargeId\":\"ch_1GDg77J7zHjTEGBx9HCgZJPW\",\"orders\":[{\"wordcount\":100,\"delivery\":24,\"content\":\"test_order_with_upload\",\"attachment\":\"1584903406109-upload.docx\"}]}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"
