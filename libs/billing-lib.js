@@ -6,7 +6,7 @@ export function calculateCost(orders) {
   return (Number(subtotal)+Number(serviceFee))*100; // Sum costs and convert from dollars to cents
 }
 
-function subtotalPricing(wordcount, delivery) {
+export function subtotalPricing(wordcount, delivery) {
   const wordcountCost = wordcountToPricing(wordcount);
   const deliveryDiscount = deliveryToPricing(wordcount, delivery);
 

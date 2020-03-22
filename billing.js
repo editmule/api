@@ -12,13 +12,13 @@ export async function main(event, context) {
   const stripe = stripePackage(process.env.stripeSecretKey);
 
   try {
-    await stripe.charges.create({
+    const charge = await stripe.charges.create({
       source,
       amount,
       description,
-      currency: "usd"
+      currency: "usd",
     });
-    return success({ status: true });
+    return success({ status: true, chargeId: charge });
   } catch (e) {
     return failure({ message: e.message });
   }
