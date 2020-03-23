@@ -11,29 +11,29 @@ import {
 export async function main(event, context) {
   const {
     orders,
-    source
+    source,
+    email
   } = JSON.parse(event.body);
 
   const amount = calculateCost(orders);
-  const description = "Edit Mule order";
+  const description = "Edit Mule order numer XXX-XXXXX-XXXXX-XXXX";
 
-  const fromMail = 'hello@editmule.com';
-  const toMail = 'zane.mountcastle@gmail.com';
-  const subject = 'Order Receipt';
   const text = `This is your order receipt. Total: $${(amount/100).toFixed(2)}`;
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: fromMail,
+      user: 'hello@editmule.com',
       pass: process.env.receiptEmailPassword
     }
   });
 
   const mailOptions = {
-    from: `Edit Mule <${fromMail}>`,
-    to: toMail,
-    subject: subject,
+    from: `Edit Mule <receipts@editmule.com>`,
+    replyTo: 'hello@editmule.com',
+    cc: 'hello@editmule.com',
+    to: email,
+    subject: 'Order Receipt',
     text: text
   };
 
@@ -41,6 +41,7 @@ export async function main(event, context) {
   const stripe = stripePackage(process.env.stripeSecretKey);
 
   try {
+    // Charge the card
     const charge = await stripe.charges.create({
       source,
       amount,
