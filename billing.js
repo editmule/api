@@ -28,7 +28,7 @@ export async function main(event, context) {
   const orderNum = orderIdGen(); // orderNum is shared across all orders in a cart that are charged together
   const orderStatus = "PENDING"; // Orders remain "PENDING" until they become "IN_PROGRESS" and then "COMPLETE";
 
-  const amount = calculateCost(orders);
+  const amount = calculateCost(orders).toFixed(0);
   const description = `Edit Mule order number: ${orderNum}`;
 
   const text = `This is your order receipt. Total: $${(amount/100).toFixed(2)}`;
@@ -57,8 +57,7 @@ export async function main(event, context) {
       source,
       amount,
       description,
-      statement_descriptor_suffix: 'ORDER',
-      currency: "usd",
+      currency: "usd"
     });
 
     // Send receipt
@@ -67,7 +66,7 @@ export async function main(event, context) {
     for (let order of orders) {
       // Subtotal for this project
       const orderCost = subtotalPricing(order.wordcount, order.delivery) * 100;
-      const userId = isAuthenticated === 'true' ? event.requestContext.identity.cognitoIdentityId : 'anonymous';
+      const userId = isAuthenticated.toString() === 'true' ? event.requestContext.identity.cognitoIdentityId : 'anonymous';
       const params = {
         TableName: process.env.tableName,
         Item: {
@@ -92,7 +91,6 @@ export async function main(event, context) {
     return success({
       orders: response,
       status: true,
-      chargeId: charge.id
     });
   } catch (e) {
     return failure({
