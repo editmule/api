@@ -1,5 +1,5 @@
 {
-  "body": "{\"source\":\"tok_visa\",\"email\":\"name@email.com\",\"orders\":[{\"wordcount\":1000,\"delivery\":\"48\",\"content\":\"testing\",\"attachment\":\"1584903406109-upload.docx\"},{\"wordcount\":50,\"delivery\":24,\"content\":\"4\",\"attachment\":null},{\"wordcount\":100,\"delivery\":24,\"content\":\"6\",\"attachment\":null}]}",
+  "body": "{\"source\":\"tok_visa\",\"isAuthenticated\":\"true\",\"email\":\"name@email.com\",\"orders\":[{\"wordcount\":1000,\"delivery\":\"48\",\"content\":\"testing\",\"attachment\":\"1584903406109-upload.docx\"},{\"wordcount\":50,\"delivery\":24,\"content\":\"4\",\"attachment\":null},{\"wordcount\":100,\"delivery\":24,\"content\":\"6\",\"attachment\":null}]}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"

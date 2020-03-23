@@ -18,7 +18,8 @@ export async function main(event, context) {
   const {
     orders,
     source,
-    email
+    email,
+    isAuthenticated
   } = JSON.parse(event.body);
 
   // Load our secret key from the  environment variables
@@ -66,10 +67,11 @@ export async function main(event, context) {
     for (let order of orders) {
       // Subtotal for this project
       const orderCost = subtotalPricing(order.wordcount, order.delivery) * 100;
+      const userId = isAuthenticated === 'true' ? event.requestContext.identity.cognitoIdentityId : 'anonymous';
       const params = {
         TableName: process.env.tableName,
         Item: {
-          userId: event.requestContext.identity.cognitoIdentityId,
+          userId: userId,
           email: email,
           orderId: uuid.v1(),
           orderNum: orderNum,
