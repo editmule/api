@@ -70,6 +70,7 @@ export async function main(event, context) {
         TableName: process.env.tableName,
         Item: {
           userId: event.requestContext.identity.cognitoIdentityId,
+          email: email,
           orderId: uuid.v1(),
           orderNum: orderNum,
           chargeId: charge.id,
