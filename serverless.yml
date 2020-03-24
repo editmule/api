@@ -110,7 +110,18 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  billing:
+  unAuthBilling:
+    # Defines an HTTP API endpoint that calls the main function in billing.js
+    # - path: url path is /billing
+    # - method: POST request
+    handler: billing.main
+    events:
+      - http:
+          path: guestbilling
+          method: post
+          cors: true
+
+  authBilling:
     # Defines an HTTP API endpoint that calls the main function in billing.js
     # - path: url path is /billing
     # - method: POST request
@@ -120,6 +131,7 @@ functions:
           path: billing
           method: post
           cors: true
+          authorizer: aws_iam
 
 # Create our resources with separate CloudFormation templates
 resources:
