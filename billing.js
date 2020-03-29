@@ -67,6 +67,7 @@ export async function main(event, context) {
       // Subtotal for this project
       const orderCost = subtotalPricing(order.wordcount, order.delivery) * 100;
       const userId = isAuthenticated.toString() === 'true' ? event.requestContext.identity.cognitoIdentityId : 'anonymous';
+      const orderContent = (order.content === "" || order.content === null) ? null : order.content;
       const params = {
         TableName: process.env.tableName,
         Item: {
@@ -76,7 +77,7 @@ export async function main(event, context) {
           orderNum: orderNum,
           chargeId: charge.id,
           cost: orderCost,
-          content: order.content,
+          content: orderContent,
           wordcount: order.wordcount,
           delivery: order.delivery,
           attachment: order.attachment,

@@ -1,6 +1,6 @@
 {
   "body":
-  "{\"orders\":[{\"wordcount\":500,\"delivery\":72,\"content\":\"https://dashboard.stripe.com/test/payments?status%5B%5D=successful\",\"attachment\":null}],\"email\":\"zane.mountcastle@gmail.com\",\"isAuthenticated\":true,\"source\":\"tok_1GQ04KDcD9QxkQ3RUsCbsRKo\"}",
+  "{\"orders\":[{\"wordcount\":500,\"delivery\":72,\"content\":null,\"attachment\":\"attachment\"}],\"email\":\"zane.mountcastle@gmail.com\",\"isAuthenticated\":true,\"source\":\"tok_visa\"}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"
