@@ -61,22 +61,20 @@ function getDeliveryEstimate(delivery) {
   return `${date.format('MMMM D')}, ${date.tz('America/New_York').format('ha z')} (${date.tz('America/Los_Angeles').format('ha z')})`;
 }
 
-function listOrdersText(orders){
-  return orders.map((order, index) => (
-    `${index+1}. ${order.content ? order.content : order.attachment} -- ${getDeliveryEstimate(order.delivery)}\n`
-  ));
+function formatFilename(str) {
+  return str.replace(/^\w+-/, "");
 }
 
-function listOrdersHtml(orders){
+function listOrders(orders, lineEnding){
   return orders.map((order, index) => (
-    `${index+1}. ${order.content ? order.content : order.attachment} -- ${getDeliveryEstimate(order.delivery)}<br>`
-  ));
+    `${index+1}. ${order.content ? order.content : formatFilename(order.attachment)} -- ${getDeliveryEstimate(order.delivery)}${lineEnding}`
+  )).join('');
 }
 
 export function generateReceiptHtml(orders, orderNum) {
-  return `<p>Hey,</p><p>We've received your order ${orderNum}. Your document delivery estimates are below:</p><p>${listOrdersHtml(orders)}</p><p>Order total: $${(calculateCost(orders).toFixed(0))/100}</p><p>We will email you with each document as it is completed.</p><p>Questions? Please reply to this email and we'll be happy to help.</p>Thanks,<br>Edit Mule`;
+  return `<p>Hey,</p><p>We've received your order ${orderNum}. Your document delivery estimates are below:</p><p>${listOrders(orders, "<br>")}</p><p>Order total: $${(calculateCost(orders)/100).toFixed(2)}</p><p>We will email you with each document as it is completed.</p><p>Questions? Please reply to this email and we'll be happy to help.</p>Thanks,<br>Edit Mule`;
 }
 
 export function generateReceipt(orders, orderNum) {
-  return `Hey,\n\nWe've received your order ${orderNum}. Your document delivery estimates are below:\n\n${listOrdersText(orders)}\nOrder total: $${(calculateCost(orders).toFixed(0))/100}\n\nWe will email you with each document as it is completed.\n\nQuestions? Please reply to this email and we'll be happy to help.\n\nThanks,\nEdit Mule`;
+  return `Hey,\n\nWe've received your order ${orderNum}. Your document delivery estimates are below:\n\n${listOrders(orders, "\n")}\nOrder total: $${(calculateCost(orders)/100).toFixed(2)}\n\nWe will email you with each document as it is completed.\n\nQuestions? Please reply to this email and we'll be happy to help.\n\nThanks,\nEdit Mule`;
 }
