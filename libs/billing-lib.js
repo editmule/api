@@ -1,9 +1,11 @@
+import moment from 'moment-timezone';
+
 export function calculateCost(orders) {
 
-  const subtotal = (Number(orders.reduce((prev,next) => prev + subtotalPricing(next.wordcount, next.delivery), 0))).toFixed(2);
-  const serviceFee = Number(((subtotal)*0.15).toFixed(2));
+  const subtotal = (Number(orders.reduce((prev, next) => prev + subtotalPricing(next.wordcount, next.delivery), 0))).toFixed(2);
+  const serviceFee = Number(((subtotal) * 0.15).toFixed(2));
 
-  return (Number(subtotal)+Number(serviceFee))*100; // Sum costs and convert from dollars to cents
+  return (Number(subtotal) + Number(serviceFee)) * 100; // Sum costs and convert from dollars to cents
 }
 
 export function subtotalPricing(wordcount, delivery) {
@@ -32,7 +34,7 @@ function wordcountToPricing(wordcount) {
     rate = 0.045;
   }
 
-  return Number((wordcount*rate).toFixed(2));
+  return Number((wordcount * rate).toFixed(2));
 }
 
 function deliveryToPricing(wordcount, delivery) {
@@ -41,15 +43,40 @@ function deliveryToPricing(wordcount, delivery) {
 
   delivery = Number(delivery);
 
-  if (delivery===24) {
+  if (delivery === 24) {
     discountRate = 0;
-  } else if (delivery===48) {
+  } else if (delivery === 48) {
     discountRate = -0.15;
-  } else if (delivery===72) {
+  } else if (delivery === 72) {
     discountRate = -0.25;
   }
 
-  const discount = cost*discountRate;
+  const discount = cost * discountRate;
 
   return Number((discount).toFixed(2));
+}
+
+function getDeliveryEstimate(delivery) {
+  const date = moment().add(delivery, 'hours');
+  return `${date.format('MMMM D')}, ${date.tz('America/New_York').format('ha z')} (${date.tz('America/Los_Angeles').format('ha z')})`;
+}
+
+function listOrdersText(orders){
+  return orders.map((order, index) => (
+    `${index+1}. ${order.content ? order.content : order.attachment} -- ${getDeliveryEstimate(order.delivery)}\n`
+  ));
+}
+
+function listOrdersHtml(orders){
+  return orders.map((order, index) => (
+    `${index+1}. ${order.content ? order.content : order.attachment} -- ${getDeliveryEstimate(order.delivery)}<br>`
+  ));
+}
+
+export function generateReceiptHtml(orders, orderNum) {
+  return `<p>Hey,</p><p>We've received your order ${orderNum}. Your document delivery estimates are below:</p><p>${listOrdersHtml(orders)}</p><p>Order total: $${(calculateCost(orders).toFixed(0))/100}</p><p>We will email you with each document as it is completed.</p><p>Questions? Please reply to this email and we'll be happy to help.</p>Thanks,<br>Edit Mule`;
+}
+
+export function generateReceipt(orders, orderNum) {
+  return `Hey,\n\nWe've received your order ${orderNum}. Your document delivery estimates are below:\n\n${listOrdersText(orders)}\nOrder total: $${(calculateCost(orders).toFixed(0))/100}\n\nWe will email you with each document as it is completed.\n\nQuestions? Please reply to this email and we'll be happy to help.\n\nThanks,\nEdit Mule`;
 }

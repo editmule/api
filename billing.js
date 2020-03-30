@@ -11,7 +11,9 @@ import {
 } from "./libs/order-lib";
 import {
   calculateCost,
-  subtotalPricing
+  subtotalPricing,
+  generateReceipt,
+  generateReceiptHtml
 } from "./libs/billing-lib";
 
 export async function main(event, context) {
@@ -31,7 +33,8 @@ export async function main(event, context) {
   const amount = calculateCost(orders).toFixed(0);
   const description = `Edit Mule order number: ${orderNum}`;
 
-  const text = `This is your order receipt. Total: $${(amount/100).toFixed(2)}`;
+  const text = generateReceipt(orders, orderNum);
+  const html = generateReceiptHtml(orders, orderNum);
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -45,8 +48,9 @@ export async function main(event, context) {
     from: `Edit Mule <hello@editmule.com>`,
     bcc: 'hello@editmule.com',
     to: email,
-    subject: 'Order Receipt',
-    text: text
+    subject: `Order confirmation`,
+    text: text,
+    html: html
   };
 
   let response = [];
