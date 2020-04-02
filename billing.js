@@ -33,9 +33,6 @@ export async function main(event, context) {
   const amount = calculateCost(orders).toFixed(0);
   const description = `Edit Mule order number: ${orderNum}`;
 
-  const text = generateReceipt(orders, orderNum);
-  const html = generateReceiptHtml(orders, orderNum);
-
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -43,15 +40,6 @@ export async function main(event, context) {
       pass: process.env.receiptEmailPassword
     }
   });
-
-  const mailOptions = {
-    from: `Edit Mule <hello@editmule.com>`,
-    bcc: 'hello@editmule.com',
-    to: email,
-    subject: `Order confirmation`,
-    text: text,
-    html: html
-  };
 
   let response = [];
 
@@ -64,8 +52,19 @@ export async function main(event, context) {
       currency: "usd"
     });
 
+    // Send the receipt
+    const text = generateReceipt(orders, orderNum, charge);
+    const html = generateReceiptHtml(orders, orderNum, charge);
+
     // Send receipt
-    await transporter.sendMail(mailOptions);
+    await transporter.sendMail({
+      from: `Edit Mule <hello@editmule.com>`,
+      bcc: 'hello@editmule.com',
+      to: email,
+      subject: `Order confirmation`,
+      text: text,
+      html: html
+    });
 
     for (let order of orders) {
       // Subtotal for this project
