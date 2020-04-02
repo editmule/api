@@ -72,7 +72,7 @@ function listOrders(orders, lineEnding){
 }
 
 export function generateReceiptHtml(orders, orderNum, charge) {
-  return `<p>Hey,</p><p>We've received your order ${orderNum}. Your document delivery estimates are below:</p><p>${listOrders(orders, "<br>")}</p><p>Order total: $${(calculateCost(orders)/100).toFixed(2)}</p><p>We will email you with each document as it is completed.</p><p><a href=${charge.receipt_url}>View your receipt.</a></p><p>Questions? Please reply to this email and we'll be happy to help.</p>Thanks,<br>Edit Mule`;
+  return `<p>Hey,</p><p>We've received your order ${orderNum}. Your document delivery estimates are below:</p><p>${listOrders(orders, "<br>")}</p><p>We will email you with each document as it is completed.</p><p><a href=${charge.receipt_url}>View your receipt.</a></p><p>Questions? Please reply to this email and we'll be happy to help.</p>Thanks,<br>Edit Mule`;
 }
 
 export function generateReceipt(orders, orderNum, charge) {
